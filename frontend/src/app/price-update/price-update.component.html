@@ -1,0 +1,31 @@
+<form (ngSubmit)="onSubmit()" #PriceForm="ngForm">
+    <div style="max-height: 500px; max-width: 1300px;overflow-y: auto;">
+        <table class="table table-bordered table-striped">
+            <thead class="sticky-header">
+                <tr>
+                    <th>ID</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <input name="address" type="text" min="1" value="1" [(ngModel)]="updPrice.id" required [readonly]="true">
+                    </td>
+                    <td>
+                        <input name="postalCode" type="number" min="1" value="1" [(ngModel)]="updPrice.value" required>
+                    </td>
+                    <td>
+                        <input type="submit" class="btn btn-primary" value="Update" [disabled]="!PriceForm.valid">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </form>
+
+<div style="text-align: center;">
+    <button (click)="closePopup()" class="btn btn-danger">Close</button>    
+</div>
+
+

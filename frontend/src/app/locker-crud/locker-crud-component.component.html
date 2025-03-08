@@ -1,0 +1,74 @@
+<div style="max-height: 500px; max-width: 1300px;overflow-y: auto;">
+    <table class="table table-bordered table-striped">
+        <thead class="sticky-header">
+            <tr>
+                <th>Serial Number</th>
+                <th>Location</th>
+                <th>Price [ € ]</th>
+                <th>Rented</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let l of lockers">
+                <td>{{l.serialNumber}}</td>
+                <td>{{l.location}}</td>
+                <td>{{l.price}}</td>
+                <td *ngIf="l.rented">SI</td>
+                <td *ngIf="!l.rented">NO</td>
+                <td>
+                    <table>
+                        <tr>
+                            <td style="text-align: center;">
+                                <img src="assets/images/trash-alt.svg" style="height: 30px; width:30px; max-height: 30px; max-width: 30pc;" (click)="deleteLocker(l.id)" class="cursor-img" title="delete a locker">
+                            </td>
+                            <td style="text-align: center;">
+                                <img src="assets/images/update.svg" style="height: 30px; width:30px; max-height: 30px; max-width: 30pc;" (click)="updateLocker(l)" class="cursor-img" title="update a locker">
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<form (ngSubmit)="onSubmit()" #LockerForm="ngForm">
+<div style="max-height: 500px; max-width: 1300px;overflow-y: auto;">
+    <table class="table table-bordered table-striped">
+        <tbody>
+            <tr>
+                <td>
+                    <input name="serialNumber" type="number" min="1" value="1" [(ngModel)]="newLocker.serialNumber" required>
+                </td>
+                <td>
+                    <select name="idLocation" [(ngModel)]="newLocker.idLocation" required>
+                        <option *ngFor="let l of locations" [value]="l.id">{{l.address}}</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="idPrice" [(ngModel)]="newLocker.idPrice" required>
+                        <option *ngFor="let p of prices" [value]="p.id">{{p.value}}</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="rented"  [(ngModel)]="newLocker.rented" required>
+                        <option value="false">NO</option>
+                        <option value="true">SI</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="submit" class="btn btn-primary" value="Add" [disabled]="!LockerForm.valid">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</form>
+
+<!-- Popup (conditionally visible when clicking on “update”) -->
+<div *ngIf="isPopupOpen" class="popup-overlay">
+    <div class="popup-content">
+      <app-locker-update [locker]="selectedLocker" (close)="closePopup()"></app-locker-update>
+    </div>
+  </div>
