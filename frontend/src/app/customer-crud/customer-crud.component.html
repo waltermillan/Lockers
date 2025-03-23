@@ -1,0 +1,78 @@
+<div style="max-height: 500px; max-width: 1300px;overflow-y: auto;">
+    <table class="table table-bordered table-striped">
+        <thead class="sticky-header">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Document</th>
+                <th>Address</th>
+                <th>Type Document</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let c of customers">
+                <td>{{c.id}}</td>
+                <td>{{c.name}}</td>
+                <td>{{c.phone}}</td>
+                <td>{{c.document}}</td>
+                <td>{{c.address}}</td>
+                <td>{{c.typeDocument}}</td>
+                <td>
+                    <table>
+                        <tr>
+                            <td style="text-align: center;">
+                                <img src="assets/images/trash-alt.svg" style="height: 30px; width:30px; max-height: 30px; max-width: 30pc;" (click)="deleteCustomer(c.id)" class="cursor-img" title="delete a document">
+                            </td>
+                            <td style="text-align: center;">
+                                <img src="assets/images/update.svg" style="height: 30px; width:30px; max-height: 30px; max-width: 30pc;" (click)="updateCustomer(c)" class="cursor-img" title="update a document">
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<form (ngSubmit)="onSubmit()" #CustomerForm="ngForm">
+<div style="max-height: 500px; max-width: 1300px;overflow-y: auto;">
+    <table class="table table-bordered table-striped">
+        <tbody>
+            <tr>
+                <td>
+                    <!-- <input name="customerId" type="number" min="1" value="1" [(ngModel)]="newCustomer.id" required> -->
+                </td>
+                <td>
+                    <input name="customerName" type="text" min="1" value="1" [(ngModel)]="newCustomer.name" required>
+                </td>
+                <td>
+                    <input name="customerPhone" type="tel" min="1" value="1" [(ngModel)]="newCustomer.phone" required>
+                </td>
+                <td>
+                    <input name="customerAddress" type="text" min="1" value="1" [(ngModel)]="newCustomer.address" required>
+                </td>
+                <td>
+                    <input name="customerDocument" type="text" min="1" value="1" [(ngModel)]="newCustomer.document" required>
+                </td>
+                <td>
+                    <select name="customerType" [(ngModel)]="newCustomer.idDocument" required style="width: 150px; padding: 5px;">
+                        <option *ngFor="let d of documents" [value]="d.id">{{d.description}}</option>
+                      </select>                      
+                  </td>                  
+                <td>
+                    <input type="submit" class="btn btn-primary" value="Add" [disabled]="!CustomerForm.valid">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</form>
+
+<!-- Popup (conditionally visible when clicking on “update”) -->
+<div *ngIf="isPopupOpen" class="popup-overlay">
+    <div class="popup-content">
+      <app-customer-update [customer]="selectedCustomer" (close)="closePopup()"></app-customer-update>
+    </div>
+</div>

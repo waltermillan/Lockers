@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <select class="form-control" [(ngModel)]="newRent.idCustomer" name="customer" required>
+        <option *ngFor="let customer of customers" [value]="customer.id">{{ customer.name }}</option>
+      </select>
+    </div>
+    <div class="col-md-6">
+      <select class="form-control" [(ngModel)]="newRent.idLocker" name="locker" required>
+        <option *ngFor="let locker of lockers" [value]="locker.id">
+          {{ locker.serialNumber }} - {{ locker.location }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-md-6">
+      <label for="startDate">Start Date:</label>
+      <input type="date" class="form-control" [(ngModel)]="newRent.rentalDate" name="startDate" required (ngModelChange)="setReturnDay()">
+    </div>
+    <div class="col-md-3">
+      <label for="endDate">End Date:</label>
+      <!-- <input type="date" class="form-control" [(ngModel)]="newRent.returnDate" name="endDate" required> -->
+      <input type="text" readonly class="form-control" [(ngModel)]="newRent.returnDate" name="endDate" required>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <button class="btn btn-primary" (click)="onSubmit()" [disabled]="!formValid()">Submit</button>
+    </div>
+  </div>
+</div>

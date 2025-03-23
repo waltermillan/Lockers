@@ -7,7 +7,7 @@
     <table style="width:100%">
       <tr>
         <td style="width:33%;text-align: left">
-          <a href="assets/docs/UserManual.pdf" target="_blank">Ayuda</a>
+          <img src="assets/images/help.svg" (click)="openHelp()" target="_blank">
 
         </td>
         <td style="width:34%;text-align: center">
@@ -28,11 +28,15 @@
   <div style="display: flex">
     <!-- lateral menu -->
     <div style="width: 200px; background-color: #f4f4f4; padding: 10px; height: 600px; font-size: 10pt;">
-      <ul>
-        <li><a routerLink="/home" routerLinkActive="active">home</a></li>
+      <ul>      
         <li><a routerLink="/Lockers" routerLinkActive="active">Lockers</a></li>
         <li><a routerLink="/Locations" routerLinkActive="active">Locations</a></li>
         <li><a routerLink="/Prices" routerLinkActive="active">Prices</a></li>
+        <li><a routerLink="/Documents" routerLinkActive="active">Documents</a></li>
+        <li><a routerLink="/Customers" routerLinkActive="active">Customers</a></li>
+        <li><a routerLink="/Roles" routerLinkActive="active">Roles</a></li>
+        <li><a routerLink="/NewRent" routerLinkActive="active">New Rent</a></li>
+        <li><a routerLink="/Rents" routerLinkActive="active">Rents</a></li>
       </ul>
     </div>
 

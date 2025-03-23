@@ -13,4 +13,6 @@ public class Rent : BaseEntity
     public DateTime RentalDate { get; set; }
     [Column("return_date")]
     public DateTime ReturnDate { get; set; }
+    [Column("user_name")]
+    public string UserName { get; set; }
 }

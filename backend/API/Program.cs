@@ -37,6 +37,8 @@ builder.Services.AddScoped<ILockerRepository, LockerRepository>();
 builder.Services.AddScoped<IPriceRepository, PriceRepository>();
 builder.Services.AddScoped<IRentRepository, RentRepository>();
 builder.Services.AddScoped<LockerDTOService>();
+builder.Services.AddScoped<CustomerDTOService>();
+builder.Services.AddScoped<RentDTOService>();
 
 
 // Add services to the container.

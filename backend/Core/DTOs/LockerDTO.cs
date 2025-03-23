@@ -9,15 +9,12 @@ namespace Core.DTOs
 {
     public class LockerDTO
     {
-        public int Id { get; set; } //sale de la tabla Locker campo Id
-
-        public int SerialNumber { get; set; } //sale de la tabla Locker campo SerialNumber
-
-        public int IdLocation { get; set; } //sale de la tabla Location campo Id
-        public string Location { get; set; } //sale de la tabla Location campo Address
-        public int IdPrice { get; set; }//sale de la tabla Price campo Id
-        public decimal Price { get; set; }//sale de la tabla Price campo Value
-
-        public bool Rented { get; set; } //sale de la tabla Locker campo Rented
+        public int Id { get; set; }                     //From table: Locker field: Id
+        public int SerialNumber { get; set; }           //From table: Locker field: SerialNumber
+        public int IdLocation { get; set; }             //From table: Location field: Id
+        public string Location { get; set; }            //From table: Location field: Address
+        public int IdPrice { get; set; }                //From table: Price field: Id
+        public decimal Price { get; set; }              //From table: Price field: Value
+        public bool Rented { get; set; }                //From table: Locker field: Rented
     }
 }

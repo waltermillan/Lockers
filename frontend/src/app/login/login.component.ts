@@ -20,6 +20,7 @@ export class LoginComponent {
     this.authService.login(this.username, this.password).subscribe({
       next: (data) => {
         console.log('User autenticated!');
+        this.authService.userLogged = this.username;
         this.authService.loggedIn = true;
         this.router.navigate(['/home']);
       },

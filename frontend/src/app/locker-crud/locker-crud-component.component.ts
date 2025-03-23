@@ -49,7 +49,7 @@ export class LockerCrudComponentComponent implements OnInit {
   }
 
   getAllLockers(){
-    return this.lockerService.getAll().subscribe({
+    return this.lockerService.getAllLockers().subscribe({
       next: (data: LockerDTO[]) => {
         this.lockers = data.sort((a, b) => a.location.localeCompare(b.location));
       },

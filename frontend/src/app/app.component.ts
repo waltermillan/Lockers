@@ -24,4 +24,8 @@ export class AppComponent {
   getHome(){
     this.router.navigate(['/home']);
   }
+
+  openHelp(){
+    window.open('assets/docs/UserManual.pdf');
+  }
 }
