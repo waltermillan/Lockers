@@ -1,0 +1,23 @@
+[
+	{
+		"Id": 1,
+		"UserName": "admin",
+		"Password": "abC2832",
+		"IdPerfil": 1
+	},
+	{
+		"Id": 2,
+		"UserName": "jonhDoe",
+		"Password": "RisK00€l",
+		"IdPerfil": 2
+	},
+	{
+		"Id": 3,
+		"UserName": "RussellVang",
+		"Password": "aP1019as",
+		"IdPerfil": 1
+	}
+]
+
+  
+  

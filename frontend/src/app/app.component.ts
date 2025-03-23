@@ -18,7 +18,7 @@ export class AppComponent {
   }
 
   logout() {
-    this.authService.logout();  // Cierra la sesión
+    this.authService.logout();  // Close session
   }
 
   getHome(){

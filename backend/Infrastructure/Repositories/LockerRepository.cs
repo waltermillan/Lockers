@@ -13,14 +13,12 @@ public class LockerRepository(Context context) : GenericRepository<Locker>(conte
                              .FirstOrDefaultAsync(a => a.Id == lockerId);
     }
 
-    // Método existente
     public override async Task<Locker> GetByIdAsync(int id)
     {
         return await _context.Lockers
                           .FirstOrDefaultAsync(p => p.Id == id);
     }
 
-    // Método existente
     public override async Task<IEnumerable<Locker>> GetAllAsync()
     {
         return await _context.Lockers.ToListAsync();

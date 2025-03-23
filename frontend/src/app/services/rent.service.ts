@@ -1,42 +1,38 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Rent } from '../models/rent.models';
 import { RentDTO } from '../models/rent-dto.models';
-import { HttpClient } from '@angular/common/http';
-
-import { Locker  } from '../models/locker.models';
-import { LockerService } from './locker.service';
-
-import { Observable } from 'rxjs';
-import { error } from 'console';
+import { Locker } from '../models/locker.models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RentService {
 
-  locker:Locker = new Locker();
+  private BaseUrl: string = 'http://localhost:5184/api/rents';
 
-  constructor(private http: HttpClient,
-              private lockerService: LockerService) { }
+  locker: Locker = new Locker();
 
-  getAllRents() : Observable<RentDTO[]>{
-    const url = `http://localhost:5184/api/rents/dto`;
+  constructor(private http: HttpClient) { }
+
+  getAllRents(): Observable<RentDTO[]> {
+    const url = `${this.BaseUrl}/dto`;
     return this.http.get<RentDTO[]>(url);
   }
 
-  addRent(rent:Rent){
-    //console.log(JSON.stringify(rent));
-    const url = `http://localhost:5184/api/rents`;
-    return this.http.post(url, rent) 
+  addRent(rent: Rent) {
+    const url = `${this.BaseUrl}`;
+    return this.http.post(url, rent);
   }
 
-  updateRent(rent:Rent){
-    const url = `http://localhost:5184/api/rents/` + rent.id;
-    return this.http.put(url, rent) 
+  updateRent(rent: Rent) {
+    const url = `${this.BaseUrl}/${rent.id}`;
+    return this.http.put(url, rent);
   }
 
-  deleteRent(id:number){
-    const url = `http://localhost:5184/api/rents/` + id;
+  deleteRent(id: number) {
+    const url = `${this.BaseUrl}/${id}`;
     return this.http.delete<Rent>(url);
   }
 }

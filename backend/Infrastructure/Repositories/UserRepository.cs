@@ -19,7 +19,7 @@ public class UserRepository(Context context) : GenericRepository<User>(context),
         if (PasswordHasher.VerifyPassword(password, user.Password)) 
             return user;
 
-        return null; // ==> Si las contraseñas no coinciden, devolvemos null
+        return null; // ==> If the passwords do not match, we return null
     }
 
     public async Task<User> GetByAdministratorIdAsync(int administratorId)

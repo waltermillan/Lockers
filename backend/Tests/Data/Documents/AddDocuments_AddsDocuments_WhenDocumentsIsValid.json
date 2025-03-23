@@ -1,0 +1,17 @@
+[
+	{
+	  "Id": 1,
+	  "Description": "DNI para ciudadanos españoles"
+	},
+	{
+	  "Id": 2,
+	  "Description": "DNI para extranjeros (NIE)"
+	},
+	{
+	  "Id": 3,
+	  "Description": "DNI electrónico"
+	}
+]
+
+  
+  

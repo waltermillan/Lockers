@@ -57,7 +57,7 @@ export class RoleCrudComponent implements OnInit{
   }
 
   deleteRole(id:number){
-    this.roleService.deleteteRole(id).subscribe({
+    this.roleService.deleteRole(id).subscribe({
       next: (data) => {
         alert('Role deleted successfully.');
         console.log('Role deleted successfully.');

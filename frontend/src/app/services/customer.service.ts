@@ -8,30 +8,32 @@ import { CustomerDTO } from '../models/customer-dto.models';
 })
 export class CustomerService {
 
+  private BaseUrl: string = 'http://localhost:5184/api/customers';
+
   constructor(private http: HttpClient) { }
 
-  getAllCustomers(){
-    const url = `http://localhost:5184/api/customers/dto`
+  getAllCustomers() {
+    const url = `${this.BaseUrl}/dto`;
     return this.http.get<CustomerDTO[]>(url);
   }
 
-  addCustomer(customer:Customer){
-    const url = `http://localhost:5184/api/customers`
-    return this.http.post(url,customer);
+  addCustomer(customer: Customer) {
+    const url = `${this.BaseUrl}`;
+    return this.http.post(url, customer);
   }
 
-  getCustomerById(id:number){
-    const url = `http://localhost:5184/api/customers/` + id
+  getCustomerById(id: number) {
+    const url = `${this.BaseUrl}/${id}`;
     return this.http.get<Customer>(url);
   }
 
-  updateCustomer(customer:Customer){
-    const url = `http://localhost:5184/api/customers/` + customer.id
+  updateCustomer(customer: Customer) {
+    const url = `${this.BaseUrl}/${customer.id}`;
     return this.http.put(url, customer);
   }
 
-  deleteteCustomer(id:number){
-    const url = `http://localhost:5184/api/Customers/` + id
+  deleteCustomer(id: number) {
+    const url = `${this.BaseUrl}/${id}`;
     return this.http.delete(url);
   }
 }

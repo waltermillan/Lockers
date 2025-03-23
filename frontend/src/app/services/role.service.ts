@@ -7,31 +7,32 @@ import { HttpClient } from '@angular/common/http';
 })
 export class RoleService {
 
+  private BaseUrl: string = 'http://localhost:5184/api/roles';
+
   constructor(private http: HttpClient) { }
 
-
-  addRole(role:Role){
-    const url = `http://localhost:5184/api/roles`
-    return this.http.post(url,role);
+  addRole(role: Role) {
+    const url = `${this.BaseUrl}`;
+    return this.http.post(url, role);
   }
 
-  getAllRoles(){
-    const url = `http://localhost:5184/api/roles`
+  getAllRoles() {
+    const url = `${this.BaseUrl}`;
     return this.http.get<Role[]>(url);
   }
 
-  getRoleById(id:number){
-    const url = `http://localhost:5184/api/roles` + id
+  getRoleById(id: number) {
+    const url = `${this.BaseUrl}/${id}`;
     return this.http.get<Role>(url);
   }
 
-  updateRole(role:Role){
-    const url = `http://localhost:5184/api/roles` + role.id
+  updateRole(role: Role) {
+    const url = `${this.BaseUrl}/${role.id}`;
     return this.http.put(url, role);
   }
 
-  deleteteRole(id:number){
-    const url = `http://localhost:5184/api/roles` + id
+  deleteRole(id: number) {
+    const url = `${this.BaseUrl}/${id}`;
     return this.http.delete(url);
   }
 }

@@ -10,5 +10,4 @@ namespace Core.DTOs
     {
         public bool? Rented { get; set; }
     }
-
 }

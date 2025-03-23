@@ -1,0 +1,17 @@
+[
+	{
+		"Id": 1,
+		"Description": "admin"
+	},
+	{
+		"Id": 2,
+		"Description": "editor"
+	},
+	{
+		"Id": 3,
+		"Description": "publisher"
+	}
+]
+
+  
+  

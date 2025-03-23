@@ -7,27 +7,29 @@ import { HttpClient } from '@angular/common/http';
 })
 export class PriceService {
 
-  price?:Price;
+  private BaseUrl: string = 'http://localhost:5184/api/prices';
+
+  price?: Price;
 
   constructor(private http: HttpClient) { }
 
-  getAllPrices(){
-    const url = `http://localhost:5184/api/prices`;
+  getAllPrices() {
+    const url = `${this.BaseUrl}`;
     return this.http.get<Price[]>(url);
   }
 
-  addPrice(price:Price){
-    const url = `http://localhost:5184/api/prices`;
-    return this.http.post<Price[]>(url,price);
+  addPrice(price: Price) {
+    const url = `${this.BaseUrl}`;
+    return this.http.post<Price[]>(url, price);
   }
 
-  updatePrice(price:Price){
-    const url = `http://localhost:5184/api/prices/` + price.id;
-    return this.http.put(url,price);
+  updatePrice(price: Price) {
+    const url = `${this.BaseUrl}/${price.id}`;
+    return this.http.put(url, price);
   }
 
-  deletePrice(id:number){
-    const url = `http://localhost:5184/api/prices/` + id;
+  deletePrice(id: number) {
+    const url = `${this.BaseUrl}/${id}`;
     return this.http.delete<Price[]>(url);
   }
 }

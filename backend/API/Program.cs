@@ -21,13 +21,12 @@ builder.Logging.AddFilter("System", LogLevel.Warning);
 
 // Serilog Configuration
 Log.Logger = new LoggerConfiguration()
-    .WriteTo.File("logs/todolist-.log", rollingInterval: RollingInterval.Day) 
+    .WriteTo.File("logs/lockers-.log", rollingInterval: RollingInterval.Day) 
     .Filter.ByExcluding(Matching.FromSource("Microsoft.EntityFrameworkCore")) 
     .Filter.ByExcluding(Matching.FromSource("Microsoft.AspNetCore")) 
     .CreateLogger();
 
 builder.Logging.AddSerilog();
-
 
 builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
@@ -39,7 +38,6 @@ builder.Services.AddScoped<IRentRepository, RentRepository>();
 builder.Services.AddScoped<LockerDTOService>();
 builder.Services.AddScoped<CustomerDTOService>();
 builder.Services.AddScoped<RentDTOService>();
-
 
 // Add services to the container.
 builder.Services.ConfigureCors();
@@ -54,7 +52,6 @@ builder.Services.AddDbContext<Context>(options =>
     )
 );
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -79,7 +76,7 @@ using (var scope = app.Services.CreateScope())
     catch (Exception ex)
     {
         var logger = loggerFactory.CreateLogger<Program>();
-        logger.LogError(ex, "Ocurrió un error durante la migración");
+        logger.LogError(ex, "An error occurred during migration");
     }
 }
 

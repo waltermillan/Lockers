@@ -13,14 +13,12 @@ public class LocationRepository(Context context) : GenericRepository<Location>(c
                              .FirstOrDefaultAsync(a => a.Id == locationId);
     }
 
-    // Método existente
     public override async Task<Location> GetByIdAsync(int id)
     {
         return await _context.Locations
                           .FirstOrDefaultAsync(p => p.Id == id);
     }
 
-    // Método existente
     public override async Task<IEnumerable<Location>> GetAllAsync()
     {
         return await _context.Locations.ToListAsync();

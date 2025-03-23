@@ -1,0 +1,29 @@
+[
+	{
+	  "Id": 1,
+	  "Name": "Walter Millán",
+	  "Phone": "641 444 444",
+	  "Document": "X2567595J",
+	  "Address": "Calle Alegria 22",
+	  "IdDocument": 2
+	},
+	{
+	  "Id": 2,
+	  "Name": "Alvaro Perez",
+	  "Phone": "412 444 444",
+	  "Document": "D1237843T",
+	  "Address": "Calle Cortesia 24",
+	  "IdDocument": 1
+	},
+	{
+	  "Id": 3,
+	  "Name": "Adrien Littmanen",
+	  "Phone": "645 444 444",
+	  "Document": "D2536741U",
+	  "Address": "Calle Angustia 33",
+	  "IdDocument": 2
+	}
+]
+
+  
+  

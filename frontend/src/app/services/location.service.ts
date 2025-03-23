@@ -8,25 +8,27 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LocationService {
 
+  private BaseUrl: string = 'http://localhost:5184/api/locations';
+
   constructor(private http: HttpClient) { }
 
-  getAllLocations(){
-    const url = `http://localhost:5184/api/locations`;
+  getAllLocations() {
+    const url = `${this.BaseUrl}`;
     return this.http.get<Location[]>(url);
   }
 
-  addLocation(location:Location){
-    const url = `http://localhost:5184/api/locations`;
-    return this.http.post<Location[]>(url,location);
+  addLocation(location: Location) {
+    const url = `${this.BaseUrl}`;
+    return this.http.post<Location[]>(url, location);
   }
 
-  updateLocation(location:Location){
-    const url = `http://localhost:5184/api/locations/` + location.id;
-    return this.http.put(url,location);
+  updateLocation(location: Location) {
+    const url = `${this.BaseUrl}/${location.id}`;
+    return this.http.put(url, location);
   }
 
-  deleteLocation(id:number){
-    const url = `http://localhost:5184/api/locations/` + id;
+  deleteLocation(id: number) {
+    const url = `${this.BaseUrl}/${id}`;
     return this.http.delete<Location[]>(url);
   }
 }

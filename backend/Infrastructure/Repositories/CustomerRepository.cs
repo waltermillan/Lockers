@@ -13,14 +13,12 @@ public class CustomerRepository(Context context) : GenericRepository<Customer>(c
                              .FirstOrDefaultAsync(a => a.Id == customerId);
     }
 
-    // Método existente
     public override async Task<Customer> GetByIdAsync(int id)
     {
         return await _context.Customers
                           .FirstOrDefaultAsync(p => p.Id == id);
     }
 
-    // Método existente
     public override async Task<IEnumerable<Customer>> GetAllAsync()
     {
         return await _context.Customers.ToListAsync();

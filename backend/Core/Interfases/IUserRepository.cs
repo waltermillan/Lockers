@@ -4,5 +4,5 @@ namespace Core.Interfases;
 
 public interface IUserRepository : IGenericRepository<User>
 {
-    Task<User> AuthenticateAsync(string userName, string password);  // Agrega este método
+    Task<User> AuthenticateAsync(string userName, string password);
 }

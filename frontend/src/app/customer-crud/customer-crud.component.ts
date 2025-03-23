@@ -81,7 +81,7 @@ export class CustomerCrudComponent implements OnInit{
   }
 
   deleteCustomer(id:number){
-    this.customerService.deleteteCustomer(id).subscribe({
+    this.customerService.deleteCustomer(id).subscribe({
       next: (data) => {
         alert('Customer deleted successfully.');
         console.log('Customer deleted successfully.');

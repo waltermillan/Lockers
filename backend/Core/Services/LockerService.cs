@@ -29,7 +29,7 @@ namespace Core.Services
             var location = await _locationRepository.GetByIdAsync(locker.IdLocation);
             var price = await _priceRepository.GetByIdAsync(locker.IdPrice);
 
-            if (locker == null || location == null || price == null)
+            if (locker is null || location is null || price is null)
             {
                 return null;
             }

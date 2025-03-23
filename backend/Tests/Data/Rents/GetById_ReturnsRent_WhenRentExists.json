@@ -1,0 +1,9 @@
+{
+  "Id": 1,
+  "IdCustomer": 1,
+  "IdLocker": 1,
+  "RentalDate": "2025-03-23T14:29:55.050",
+  "ReturnDate": "2025-03-24T14:29:55.050",
+  "UserName": "admin"
+}
+

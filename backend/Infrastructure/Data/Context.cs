@@ -27,15 +27,6 @@ namespace Infrastructure.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            //modelBuilder.Entity<Rent>()
-            //    .HasOne(r => r.Customer)
-            //    .WithMany()
-            //    .HasForeignKey(r => r.IdCustomer);
-
-            //modelBuilder.Entity<Rent>()
-            //    .HasOne(r => r.Car)
-            //    .WithMany()
-            //    .HasForeignKey(r => r.IdCar);
         }
     }
 

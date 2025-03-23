@@ -8,25 +8,27 @@ import { HttpClient } from '@angular/common/http';
 })
 export class DocumentService {
 
+  private BaseUrl: string = 'http://localhost:5184/api/documents';
+
   constructor(private http: HttpClient) { }
 
-  getAllDocuments(){
-    const url = `http://localhost:5184/api/documents`;
+  getAllDocuments() {
+    const url = `${this.BaseUrl}`;
     return this.http.get<Document[]>(url);
   }
 
-  addDocument(document:Document){
-    const url = `http://localhost:5184/api/documents`;
-    return this.http.post<Document[]>(url,document);
+  addDocument(document: Document) {
+    const url = `${this.BaseUrl}`;
+    return this.http.post<Document[]>(url, document);
   }
 
-  updateDocument(document:Document){
-    const url = `http://localhost:5184/api/documents/` + document.id;
-    return this.http.put(url,document);
+  updateDocument(document: Document) {
+    const url = `${this.BaseUrl}/${document.id}`;
+    return this.http.put(url, document);
   }
 
-  deleteDocument(id:number){
-    const url = `http://localhost:5184/api/documents/` + id;
+  deleteDocument(id: number) {
+    const url = `${this.BaseUrl}/${id}`;
     return this.http.delete<Document[]>(url);
   }
 }

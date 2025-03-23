@@ -1,0 +1,20 @@
+[
+	{
+		"Id": 1,
+		"Address": "Calle Agua 77",
+		"PostalCode": 29012
+	},
+	{
+		"Id": 2,
+		"Address": "Calle Comedias 42",
+		"PostalCode": 29012
+	},
+	{
+		"Id": 3,
+		"Address": "Calle Verdun 33",
+		"PostalCode": 29012
+	}
+]
+
+  
+  
