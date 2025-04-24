@@ -7,12 +7,14 @@ using Serilog;
 using Infrastructure.Logging;
 using Serilog.Filters;
 using Microsoft.Extensions.DependencyInjection;
-using Core.Interfases;
+using Core.Interfaces;
 using Infrastructure.Repositories;
 using Pomelo.EntityFrameworkCore.MySql;
-using Core.Services;
+using API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var appName = builder.Configuration["SystemName:AppName"] ?? "WorkersApp";
 
 builder.Logging.ClearProviders();
 
@@ -21,26 +23,18 @@ builder.Logging.AddFilter("System", LogLevel.Warning);
 
 // Serilog Configuration
 Log.Logger = new LoggerConfiguration()
-    .WriteTo.File("logs/lockers-.log", rollingInterval: RollingInterval.Day) 
+    .WriteTo.File($"logs/{appName}-.log", rollingInterval: RollingInterval.Day) 
     .Filter.ByExcluding(Matching.FromSource("Microsoft.EntityFrameworkCore")) 
     .Filter.ByExcluding(Matching.FromSource("Microsoft.AspNetCore")) 
     .CreateLogger();
 
 builder.Logging.AddSerilog();
 
-builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
-builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
-builder.Services.AddScoped<ILocationRepository, LocationRepository>();
-builder.Services.AddScoped<ILockerRepository, LockerRepository>();
-builder.Services.AddScoped<IPriceRepository, PriceRepository>();
-builder.Services.AddScoped<IRentRepository, RentRepository>();
-builder.Services.AddScoped<LockerDTOService>();
-builder.Services.AddScoped<CustomerDTOService>();
-builder.Services.AddScoped<RentDTOService>();
+// Force automatically generated paths (as with [controller]) to be lowercase
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 // Add services to the container.
-builder.Services.ConfigureCors();
+builder.Services.ConfigureCors(builder.Configuration);
 builder.Services.AddAplicacionServices();
 builder.Services.AddControllers();
 

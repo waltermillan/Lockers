@@ -1,8 +1,8 @@
 ﻿using API.Controllers;
 using AutoMapper;
 using Core.Entities;
-using Core.Interfases;
-using Core.Services.Tests;
+using Core.Interfaces;
+using Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Newtonsoft.Json;
@@ -13,11 +13,12 @@ public class UserControllerTests
     private readonly UsersController _controller;
     private readonly Mock<IUnitOfWork> _mockRepo;
     private readonly IMapper _mapper;
+    private readonly IPasswordHasher _passwordHasher;
 
     public UserControllerTests()
     {
         _mockRepo = new Mock<IUnitOfWork>();
-        _controller = new UsersController(_mockRepo.Object, _mapper);
+        _controller = new UsersController(_mockRepo.Object, _mapper, _passwordHasher);
     }
 
     [Fact]

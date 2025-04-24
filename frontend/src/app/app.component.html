@@ -1,51 +1,119 @@
-<div *ngIf="!authService.isAuthenticated()">
-  <app-login></app-login> 
+<div *ngIf="!authService.isLoggedIn()">
+  <app-login></app-login>
 </div>
 
-<div *ngIf="authService.isAuthenticated()">
-  <header style="background-color: #d6e9e9; color: black; padding: 20px; display: flex; justify-content: space-between; align-items: center;">
-    <table style="width:100%">
-      <tr>
-        <td style="width:33%;text-align: left">
-          <img src="assets/images/help.svg" (click)="openHelp()" target="_blank">
+<div *ngIf="authService.isLoggedIn()">
+  <div id="dvHeader">
+    <header
+      style="
+        background-color: #d6e9e9;
+        color: black;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      "
+    >
+      <table style="width: 100%">
+        <tr>
+          <td style="width: 33%; text-align: left">
+            <img
+              src="assets/images/help.svg"
+              (click)="openHelp()"
+              target="_blank" title="Go to user manual"
+            />
+          </td>
+          <td style="width: 34%; text-align: center">
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                flex-grow: 1;
+                justify-content: center;
+              "
+            >
+              <img
+                src="assets/images/logo.png"
+                alt="Logo"
+                style="
+                  max-width: 274px;
+                  max-height: 61px;
+                  vertical-align: middle;
+                  margin-right: 20px;
+                "
+                (click)="getHome()"
+              />
+            </div>
+          </td>
+          <td style="width: 33%; text-align: right">
+            <button
+              (click)="logout()"
+              style="
+                padding: 6px 12px;
+                background-color: #f44336;
+                color: white;
+                border: none;
+                cursor: pointer;
+                font-size: 14px;
+              " title="Log out"
+            >
+              Log Out
+            </button>
+            <div style="text-align: right; font-size: 14px">
+              <span><b>User:</b> {{ userName }}</span>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </header>
+  </div>
 
-        </td>
-        <td style="width:34%;text-align: center">
-          <div style="display: flex; align-items: center; flex-grow: 1; justify-content: center;">
-            <img src="assets/images/logo.png" alt="Logo" style="max-width: 60px; max-height: 60px; vertical-align: middle; margin-right: 20px;" (click)="getHome()">
-            <span style="font-size: 24px; vertical-align: middle;">{{this.title}}</span>
-          </div>
-        </td>
-        <td style="width:33%;text-align: right;">
-          <button (click)="logout()" style="padding: 6px 12px; background-color: #f44336; color: white; border: none; cursor: pointer; font-size: 14px;">
-            Log Out
-          </button>	
-        </td>
-      </tr>
-    </table>    
-  </header>
-
-  <div style="display: flex">
-    <!-- lateral menu -->
-    <div style="width: 200px; background-color: #f4f4f4; padding: 10px; height: 600px; font-size: 10pt;">
-      <ul>      
-        <li><a routerLink="/Lockers" routerLinkActive="active">Lockers</a></li>
-        <li><a routerLink="/Locations" routerLinkActive="active">Locations</a></li>
-        <li><a routerLink="/Prices" routerLinkActive="active">Prices</a></li>
-        <li><a routerLink="/Documents" routerLinkActive="active">Documents</a></li>
-        <li><a routerLink="/Customers" routerLinkActive="active">Customers</a></li>
-        <li><a routerLink="/Roles" routerLinkActive="active">Roles</a></li>
+  <!-- lateral menu -->
+  <div id="dvMenu" style="display: flex">
+    <div
+      style="
+        width: 200px;
+        background-color: #f4f4f4;
+        padding: 10px;
+        height: 600px;
+        font-size: 10pt;
+      "
+    >
+      <ul>
+        <li *ngIf="isAdmin"><a routerLink="/Lockers" routerLinkActive="active">Lockers</a></li>
+        <li *ngIf="isAdmin">
+          <a routerLink="/Locations" routerLinkActive="active">Locations</a>
+        </li>
+        <li *ngIf="isAdmin"><a routerLink="/Prices" routerLinkActive="active">Prices</a></li>
+        <li *ngIf="isAdmin">
+          <a routerLink="/Documents" routerLinkActive="active">Documents</a>
+        </li>
+        <li *ngIf="isAdmin">
+          <a routerLink="/Customers" routerLinkActive="active">Customers</a>
+        </li>
+        <li *ngIf="isAdmin"><a routerLink="/Roles" routerLinkActive="active">Roles</a></li>
         <li><a routerLink="/NewRent" routerLinkActive="active">New Rent</a></li>
         <li><a routerLink="/Rents" routerLinkActive="active">Rents</a></li>
       </ul>
     </div>
 
-    <div style="flex-grow: 1; padding: 20px;">
+    <div style="flex-grow: 1; padding: 20px">
       <router-outlet></router-outlet>
     </div>
   </div>
 
-  <footer style="background-color: #d6e9e9; color: black; padding: 10px; text-align: center; position: fixed; width: 100%; bottom: 0;height: 50px;">
-    <p>&copy; 2025 {{this.title}} All rights reserved.</p>
+  <footer
+    style="
+      background-color: #d6e9e9;
+      color: black;
+      padding: 10px;
+      text-align: center;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+      height: 50px;
+    "
+  >
+    <p>&copy; 2025 {{ this.title }} All rights reserved.</p>
   </footer>
 </div>

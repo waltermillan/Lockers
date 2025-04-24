@@ -1,0 +1,89 @@
+<form (ngSubmit)="onSubmit()" #RoleForm="ngForm">
+  <div
+    style="
+      max-height: 500px;
+      max-width: 1300px;
+      overflow-y: auto;
+      position: relative;
+    "
+  >
+    <!-- Roles Table  -->
+    <table
+      class="table table-bordered table-striped"
+      style="table-layout: fixed; width: 100%"
+    >
+      <thead class="sticky-header">
+        <tr>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let r of roles">
+          <td>{{ r.description }}</td>
+          <td>
+            <table>
+              <tr>
+                <td style="text-align: center">
+                  <img
+                    src="assets/images/trash-alt.svg"
+                    style="height: 30px; width: 30px; cursor: pointer"
+                    (click)="deleteRole(r.id)"
+                    class="cursor-img"
+                    title="delete a role"
+                  />
+                </td>
+                <td style="text-align: center">
+                  <img
+                    src="assets/images/update.svg"
+                    style="height: 30px; width: 30px; cursor: pointer"
+                    (click)="updateRole(r)"
+                    class="cursor-img"
+                    title="update a role"
+                  />
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Footer fixed (add rol fom) -->
+    <div class="table-footer-form">
+      <table style="table-layout: fixed; width: 100%">
+        <tr>
+          <td style="width: 20%">
+            <input
+              name="roleDescription"
+              type="text"
+              min="1"
+              value="1"
+              [(ngModel)]="newRole.description"
+              required
+            />
+          </td>
+          <td style="width: 20%; text-align: center">
+            <input
+              type="submit"
+              class="btn btn-primary"
+              value="Add"
+              [disabled]="!RoleForm.valid"
+              style="width: 20%"
+            />
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</form>
+
+<!-- Popup (conditionally visible when clicking on ‘update’) -->
+<div *ngIf="isPopupOpen" class="popup-overlay">
+  <div class="popup-content">
+    <app-role-update
+      [role]="selectedRole"
+      (close)="closePopup()"
+    ></app-role-update>
+  </div>
+</div>

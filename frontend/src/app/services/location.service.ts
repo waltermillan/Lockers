@@ -1,34 +1,32 @@
 import { Injectable } from '@angular/core';
-import { Location } from '../models/location.models';
-import { Observable } from 'rxjs';
+import { Location } from '@models/location.models';
 import { HttpClient } from '@angular/common/http';
+import { GLOBAL } from '@configuration/configuration.global';
+import { EndpointType } from 'enums/endpoint-type.enum';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LocationService {
+  constructor(private http: HttpClient) {}
 
-  private BaseUrl: string = 'http://localhost:5184/api/locations';
-
-  constructor(private http: HttpClient) { }
-
-  getAllLocations() {
-    const url = `${this.BaseUrl}`;
+  getAll() {
+    const url = `${GLOBAL.apiBaseUrl}/${EndpointType.Location}`;
     return this.http.get<Location[]>(url);
   }
 
-  addLocation(location: Location) {
-    const url = `${this.BaseUrl}`;
+  add(location: Location) {
+    const url = `${GLOBAL.apiBaseUrl}/${EndpointType.Location}`;
     return this.http.post<Location[]>(url, location);
   }
 
-  updateLocation(location: Location) {
-    const url = `${this.BaseUrl}/${location.id}`;
+  update(location: Location) {
+    const url = `${GLOBAL.apiBaseUrl}/${EndpointType.Location}/${location.id}`;
     return this.http.put(url, location);
   }
 
-  deleteLocation(id: number) {
-    const url = `${this.BaseUrl}/${id}`;
+  delete(id: number) {
+    const url = `${GLOBAL.apiBaseUrl}/${EndpointType.Location}/${id}`;
     return this.http.delete<Location[]>(url);
   }
 }

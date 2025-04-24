@@ -1,38 +1,37 @@
 import { Injectable } from '@angular/core';
-import { Role } from '../models/role.models';
+import { Role } from '@models/role.models';
 import { HttpClient } from '@angular/common/http';
+import { GLOBAL } from '@configuration/configuration.global';
+import { EndpointType } from 'enums/endpoint-type.enum';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RoleService {
+  constructor(private http: HttpClient) {}
 
-  private BaseUrl: string = 'http://localhost:5184/api/roles';
-
-  constructor(private http: HttpClient) { }
-
-  addRole(role: Role) {
-    const url = `${this.BaseUrl}`;
+  add(role: Role) {
+    const url = `${GLOBAL.apiBaseUrl}/${EndpointType.Role}`;
     return this.http.post(url, role);
   }
 
-  getAllRoles() {
-    const url = `${this.BaseUrl}`;
+  getAll() {
+    const url = `${GLOBAL.apiBaseUrl}/${EndpointType.Role}`;
     return this.http.get<Role[]>(url);
   }
 
-  getRoleById(id: number) {
-    const url = `${this.BaseUrl}/${id}`;
+  getById(id: number) {
+    const url = `${GLOBAL.apiBaseUrl}/${EndpointType.Role}/${id}`;
     return this.http.get<Role>(url);
   }
 
-  updateRole(role: Role) {
-    const url = `${this.BaseUrl}/${role.id}`;
+  update(role: Role) {
+    const url = `${GLOBAL.apiBaseUrl}/${EndpointType.Role}`;
     return this.http.put(url, role);
   }
 
-  deleteRole(id: number) {
-    const url = `${this.BaseUrl}/${id}`;
+  delete(id: number) {
+    const url = `${GLOBAL.apiBaseUrl}/${EndpointType.Role}/${id}`;
     return this.http.delete(url);
   }
 }

@@ -1,86 +1,105 @@
-﻿using AutoMapper;
+﻿using API.DTOs;
+using API.Responses;
+using API.Services;
+using AutoMapper;
 using Core.Constants;
 using Core.Entities;
-using Core.Interfases;
+using Core.Interfaces;
+using Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
-using System;
 
 namespace API.Controllers;
-[ApiController]
-[Route("api/[controller]")]
+
 public class UsersController : BaseApiController
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly IPasswordHasher _passwordHasher;
+    private readonly UserDTOService _userDtoService;
 
-    public UsersController(IUnitOfWork unitOfWork, IMapper mapper)
+    public UsersController(IUnitOfWork unitOfWork, IMapper mapper, IPasswordHasher passwordHasher, UserDTOService userDtoService)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _passwordHasher = passwordHasher;
+        _userDtoService = userDtoService;
     }
 
     [HttpPost("login")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> Login(string userName, string password)
+    public async Task<ActionResult> Post([FromBody] LoginRequest request)
     {
+        var usr = request.Usr.ToUpper();
+        var psw = request.Psw;
+
         try
         {
-            var user = await _unitOfWork.Users.AuthenticateAsync(userName, password);
+            var user = await _unitOfWork.Users.GetByUserAsync(usr);
 
-            if (user is null)
+            if (user is null || !_passwordHasher.VerifyPassword(psw, user.Password))
             {
-                return BadRequest(new
-                {
-                    IsAuthenticated = false,
-                    Message = "Incorrect username or password.",
-                    ErrorCode = 400  // Error code
-                });
+                Log.Logger.Information($"Login attempt failed for user: {usr}");
+                return Unauthorized(new { Code = 401, Message = "Invalid username or password" });
             }
 
-            return Ok(new
-            {
-                IsAuthenticated = true,
-                Message = "Successful authentication.",
-                ErrorCode = 200  // Success Code
-            });
-        }
-        catch (Exception exception)
-        {
-            Log.Logger.Error("Error authenticating user.", exception);
+            Log.Logger.Information($"User '{usr}' authenticated successfully.");
 
-            return StatusCode(500, new
+            var rol = await _unitOfWork.Roles.GetByIdAsync(user.IdPerfil);
+
+            var data = new
             {
-                IsAuthenticated = false,
-                Message = "There was a problem trying to authenticate the user.",
-                ErrorCode = 500
-            });
+                user.Id,
+                user.UserName,
+                user.IdPerfil,
+                rol.Description
+            };
+
+            return Ok(ApiResponseFactory.Success<object>(data, "User authenticated successfully"));
+        }
+        catch (Exception ex)
+        {
+            Log.Logger.Error("Authentication error", ex);
+            return StatusCode(500, ApiResponseFactory.Fail<object>($"There was an issue authenticating the user. Details ${ex.Message}"));
         }
     }
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<IEnumerable<User>>> Get()
+    public async Task<ActionResult<IEnumerable<UserDTO>>> Get()
     {
-        var users = await _unitOfWork.Users.GetAllAsync();
-        return _mapper.Map<List<User>>(users);
+        var users = await _userDtoService.GetAllAsync();
+        return _mapper.Map<List<UserDTO>>(users);
     }
+    //public async Task<ActionResult<IEnumerable<User>>> Get()
+    //{
+    //    var users = await _unitOfWork.Users.GetAllAsync();
+    //    return _mapper.Map<List<User>>(users);
+    //}
 
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<User>> Get(int id)
+    public async Task<ActionResult<UserDTO>> Get(int id)
     {
-        var user = await _unitOfWork.Users.GetByIdAsync(id);
+        var user = await _userDtoService.GetByIdAsync(id);
 
         if (user is null)
             return NotFound();
 
-        return _mapper.Map<User>(user);
+        return _mapper.Map<UserDTO>(user);
     }
+    //{
+    //    var user = await _unitOfWork.Users.GetByIdAsync(id);
+
+    //    if (user is null)
+    //        return NotFound();
+
+    //    return _mapper.Map<User>(user);
+    //}
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
@@ -91,6 +110,9 @@ public class UsersController : BaseApiController
         try
         {
             var user = _mapper.Map<User>(oUser);
+
+            user.Password = _passwordHasher.HashPassword(user.Password);
+
             _unitOfWork.Users.Add(user);
             await _unitOfWork.SaveAsync();
 
@@ -113,7 +135,7 @@ public class UsersController : BaseApiController
         }
     }
 
-    [HttpPut("{id}")]
+    [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -126,6 +148,9 @@ public class UsersController : BaseApiController
                 return NotFound();
 
             var user = _mapper.Map<User>(oUser);
+
+            user.Password = _passwordHasher.HashPassword(user.Password);
+
             _unitOfWork.Users.Update(user);
             await _unitOfWork.SaveAsync();
 

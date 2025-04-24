@@ -1,15 +1,13 @@
 ﻿using AutoMapper;
 using Core.Constants;
 using Core.Entities;
-using Core.Interfases;
+using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using Serilog;
 using System;
 
 namespace API.Controllers;
-[ApiController]
-[Route("api/[controller]")]
 public class DocumentsController : BaseApiController
 {
     private readonly IUnitOfWork _unitOfWork;
@@ -75,7 +73,7 @@ public class DocumentsController : BaseApiController
         }
     }
 
-    [HttpPut("{id}")]
+    [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

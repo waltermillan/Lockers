@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from './services/auth.service';
-import { GLOBAL_CONFIG } from './config/config.global';
+import { GLOBAL } from '@configuration/configuration.global';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,17 +8,33 @@ import { Router } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = '';
-  
+  userName:string | null = '';
+  userRole:string | null = '';
+  isAdmin: boolean = false;
+
   constructor(public authService: AuthService,
              private router: Router) 
   {
-    this.title = GLOBAL_CONFIG.appName;
+    this.title = GLOBAL.appName;
   }
 
   logout() {
     this.authService.logout();  // Close session
+  }
+
+  ngOnInit(): void {
+    this.authService.userName$.subscribe((name) => {
+      this.userName = name;
+    })  
+    this.authService.userRole$.subscribe((role) => {
+      this.userRole = role;
+      if (role) {
+        this.isAdmin = role.toLowerCase() === GLOBAL.adminRole.toLowerCase();
+      }
+    })  
+
   }
 
   getHome(){

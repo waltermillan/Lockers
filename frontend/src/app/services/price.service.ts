@@ -1,35 +1,34 @@
 import { Injectable } from '@angular/core';
-import { Price } from '../models/price.models';
+import { Price } from '@models/price.models';
 import { HttpClient } from '@angular/common/http';
+import { GLOBAL } from '@configuration/configuration.global';
+import { EndpointType } from 'enums/endpoint-type.enum';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PriceService {
-
-  private BaseUrl: string = 'http://localhost:5184/api/prices';
-
   price?: Price;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getAllPrices() {
-    const url = `${this.BaseUrl}`;
+  getAll() {
+    const url = `${GLOBAL.apiBaseUrl}/${EndpointType.Price}`;
     return this.http.get<Price[]>(url);
   }
 
-  addPrice(price: Price) {
-    const url = `${this.BaseUrl}`;
+  add(price: Price) {
+    const url = `${GLOBAL.apiBaseUrl}/${EndpointType.Price}`;
     return this.http.post<Price[]>(url, price);
   }
 
-  updatePrice(price: Price) {
-    const url = `${this.BaseUrl}/${price.id}`;
+  update(price: Price) {
+    const url = `${GLOBAL.apiBaseUrl}/${EndpointType.Price}`;
     return this.http.put(url, price);
   }
 
-  deletePrice(id: number) {
-    const url = `${this.BaseUrl}/${id}`;
+  delete(id: number) {
+    const url = `${GLOBAL.apiBaseUrl}/${EndpointType.Price}/${id}`;
     return this.http.delete<Price[]>(url);
   }
 }

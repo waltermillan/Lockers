@@ -1,21 +1,19 @@
-﻿using AutoMapper;
+﻿using API.DTOs;
+using API.Services;
+using AutoMapper;
 using Core.Constants;
-using Core.DTOs;
 using Core.Entities;
-using Core.Interfases;
-using Core.Services;
+using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
 namespace API.Controllers;
-[ApiController]
-[Route("api/[controller]")]
+
 public class LockersController : BaseApiController
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly LockerDTOService _lockerDTOService;
-
 
     public LockersController(IUnitOfWork unitOfWork, IMapper mapper, LockerDTOService lockerDTOService)
     {
@@ -30,9 +28,9 @@ public class LockersController : BaseApiController
         var lockersDTO = await _lockerDTOService.GetAllLockersAsync();
 
         if (lockersDTO is null || !lockersDTO.Any())
-            return NotFound(); // Returna NotFound if no lockers
+            return NotFound();
 
-        return Ok(lockersDTO); // Returna the lockers in DTO format
+        return Ok(lockersDTO);
     }
 
 
@@ -114,7 +112,7 @@ public class LockersController : BaseApiController
 
     }
 
-    [HttpPut("{id}")]
+    [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

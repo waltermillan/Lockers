@@ -2,19 +2,19 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
-import { LockerCrudComponentComponent } from './locker-crud/locker-crud-component.component';
-import { LockerUpdateComponent } from './locker-update/locker-update.component';
-import { LocationCrudComponent }  from './location-crud/location-crud.component';
-import { LocationUpdateComponent }  from './location-update/location-update.component';
-import { PriceCrudComponent }  from './price-crud/price-crud.component';
-import { DocumentCrudComponent }  from './document-crud/document-crud.component';
-import { DocumentUpdateComponent }  from './document-update/document-update.component';
-import { CustomerCrudComponent }  from './customer-crud/customer-crud.component';
-import { CustomerUpdateComponent }  from './customer-update/customer-update.component';
-import { RoleCrudComponent }  from './role-crud/role-crud.component';
-import { RoleUpdateComponent }  from './role-update/role-update.component';
-import { RentCrudComponent }  from './rent-crud/rent-crud.component';
-import { RentReadComponent }  from './rent-read/rent-read.component';
+import { LockerCrudComponentComponent } from './lockers/locker-crud/locker-crud-component.component';
+import { LockerUpdateComponent } from './lockers/locker-update/locker-update.component';
+import { LocationCrudComponent } from './locations/location-crud/location-crud.component';
+import { LocationUpdateComponent } from './locations/location-update/location-update.component';
+import { PriceCrudComponent } from './prices/price-crud/price-crud.component';
+import { DocumentCrudComponent } from './documents/document-crud/document-crud.component';
+import { DocumentUpdateComponent } from './documents/document-update/document-update.component';
+import { CustomerCrudComponent } from './customers/customer-crud/customer-crud.component';
+import { CustomerUpdateComponent } from './customers/customer-update/customer-update.component';
+import { RoleCrudComponent } from './roles/role-crud/role-crud.component';
+import { RoleUpdateComponent } from './roles/role-update/role-update.component';
+import { RentCrudComponent } from './rents/rent-crud/rent-crud.component';
+import { RentReadComponent } from './rents/rent-read/rent-read.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'Lockers', component: LockerCrudComponentComponent },
   { path: 'Locker-Update', component: LockerUpdateComponent },
   { path: 'Locations', component: LocationCrudComponent },
-  { path: 'Location-Update', component: LocationUpdateComponent },  
+  { path: 'Location-Update', component: LocationUpdateComponent },
   { path: 'Prices', component: PriceCrudComponent },
 
   { path: 'Documents', component: DocumentCrudComponent },
@@ -41,6 +41,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

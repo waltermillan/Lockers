@@ -1,34 +1,32 @@
 import { Injectable } from '@angular/core';
-import { Document } from '../models/document.models';
-import { Observable } from 'rxjs';
+import { Document } from '@models/document.models';
 import { HttpClient } from '@angular/common/http';
+import { GLOBAL } from '@configuration/configuration.global';
+import { EndpointType } from 'enums/endpoint-type.enum';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DocumentService {
+  constructor(private http: HttpClient) {}
 
-  private BaseUrl: string = 'http://localhost:5184/api/documents';
-
-  constructor(private http: HttpClient) { }
-
-  getAllDocuments() {
-    const url = `${this.BaseUrl}`;
+  getAll() {
+    const url = `${GLOBAL.apiBaseUrl}/${EndpointType.Document}`;
     return this.http.get<Document[]>(url);
   }
 
-  addDocument(document: Document) {
-    const url = `${this.BaseUrl}`;
+  add(document: Document) {
+    const url = `${GLOBAL.apiBaseUrl}/${EndpointType.Document}`;
     return this.http.post<Document[]>(url, document);
   }
 
-  updateDocument(document: Document) {
-    const url = `${this.BaseUrl}/${document.id}`;
+  update(document: Document) {
+    const url = `${GLOBAL.apiBaseUrl}/${EndpointType.Document}`;
     return this.http.put(url, document);
   }
 
-  deleteDocument(id: number) {
-    const url = `${this.BaseUrl}/${id}`;
+  delete(id: number) {
+    const url = `${GLOBAL.apiBaseUrl}/${EndpointType.Document}/${id}`;
     return this.http.delete<Document[]>(url);
   }
 }

@@ -1,38 +1,37 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Rent } from '../models/rent.models';
-import { RentDTO } from '../models/rent-dto.models';
-import { Locker } from '../models/locker.models';
+import { Rent } from '@models/rent.models';
+import { RentDTO } from '@models/rent-dto.models';
+import { Locker } from '@models/locker.models';
+import { GLOBAL } from '@configuration/configuration.global';
+import { EndpointType } from 'enums/endpoint-type.enum';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RentService {
-
-  private BaseUrl: string = 'http://localhost:5184/api/rents';
-
   locker: Locker = new Locker();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getAllRents(): Observable<RentDTO[]> {
-    const url = `${this.BaseUrl}/dto`;
+  getAll(): Observable<RentDTO[]> {
+    const url = `${GLOBAL.apiBaseUrl}/${EndpointType.Rent}/dto`;
     return this.http.get<RentDTO[]>(url);
   }
 
-  addRent(rent: Rent) {
-    const url = `${this.BaseUrl}`;
+  add(rent: Rent) {
+    const url = `${GLOBAL.apiBaseUrl}/${EndpointType.Rent}`;
     return this.http.post(url, rent);
   }
 
-  updateRent(rent: Rent) {
-    const url = `${this.BaseUrl}/${rent.id}`;
+  update(rent: Rent) {
+    const url = `${GLOBAL.apiBaseUrl}/${EndpointType.Rent}/${rent.id}`;
     return this.http.put(url, rent);
   }
 
-  deleteRent(id: number) {
-    const url = `${this.BaseUrl}/${id}`;
+  delete(id: number) {
+    const url = `${GLOBAL.apiBaseUrl}/${EndpointType.Rent}/${id}`;
     return this.http.delete<Rent>(url);
   }
 }

@@ -1,4 +1,4 @@
-﻿using Core.Interfases;
+﻿using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 namespace Infrastructure.UnitOfWork;

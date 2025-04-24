@@ -28,6 +28,7 @@
         public static string MSG_LOCATION_UPDATED_SUCCESS { get; set; } = "Location updated - Id {0} - Description: {1}";
         public static string MSG_LOCATION_DELETED_ERROR { get; set; } = "Error deleting a location";
         public static string MSG_LOCATION_DELETED_SUCCESS { get; set; } = "Location deleted - Id {0} - Description: {1}";
+        public static string MSG_LOCATION_DUPLICATED_SUCCESS { get; set; } = "Error: Duplicate. A record with that unique value already exists.";
         #endregion
 
         #region Messages from LOCKER entity

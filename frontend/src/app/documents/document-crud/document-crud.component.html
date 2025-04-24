@@ -1,0 +1,61 @@
+<form (ngSubmit)="onSubmit()" #DocumentForm="ngForm">
+    <div style="max-height: 550px; max-width: 1300px; overflow-y: auto; position: relative;">
+      <table class="table table-bordered table-striped" style="table-layout: fixed; width: 100%;">
+        <thead class="sticky-header">
+          <tr>
+            <th>Description</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let d of documents">
+            <td>{{ d.description }}</td>
+            <td>
+              <table>
+                <tr>
+                  <td style="text-align: center;">
+                    <img src="assets/images/trash-alt.svg"
+                         style="height: 30px; width: 30px; cursor: pointer;"
+                         (click)="deleteDocument(d.id)" class="cursor-img" title="delete a document">
+                  </td>
+                  <td style="text-align: center;">
+                    <img src="assets/images/update.svg"
+                         style="height: 30px; width: 30px; cursor: pointer;"
+                         (click)="updateDocument(d)" class="cursor-img" title="update a document">
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  
+      <div class="table-footer-form">
+        <table style="table-layout: fixed; width: 100%;">
+          <tr>
+            <td style="width: 34%;">
+              <input name="documentDescription"
+                     type="text"
+                     [(ngModel)]="newDocument.description"
+                     required
+                     style="width: 80%;">
+            </td>
+            <td style="width: 33%; text-align: center">
+              <input type="submit"
+                     class="btn btn-primary"
+                     value="Add"
+                     [disabled]="!DocumentForm.valid"
+                     style="width: 50%">
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </form>
+  
+  <div *ngIf="isPopupOpen" class="popup-overlay">
+    <div class="popup-content">
+      <app-document-update [document]="selectedDocument" (close)="closePopup()"></app-document-update>
+    </div>
+  </div>
+  

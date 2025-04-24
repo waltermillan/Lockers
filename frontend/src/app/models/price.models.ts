@@ -1,4 +1,9 @@
 export class Price {
-    id:number = 0;
-    value:number = 0;
+  id: number;
+  value: number;
+
+  constructor() {
+    this.id = 0;
+    this.value = 0;
+  }
 }

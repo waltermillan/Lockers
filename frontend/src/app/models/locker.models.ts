@@ -1,7 +1,15 @@
 export class Locker {
-    id:number = 0;
-    serialNumber:number = 0;
-    idLocation:number = 0;
-    idPrice:number = 0
-    rented:boolean = false;
+  id: number;
+  serialNumber: number;
+  idLocation: number;
+  idPrice: number;
+  rented: boolean;
+
+  constructor() {
+    this.id = 0;
+    this.serialNumber = 0;
+    this.idLocation = 0;
+    this.idPrice = 0;
+    this.rented = false;
+  }
 }

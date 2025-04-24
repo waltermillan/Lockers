@@ -1,33 +1,89 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { GLOBAL } from '@configuration/configuration.global';
+import { tap } from 'rxjs/operators';
+import { EndpointType } from 'enums/endpoint-type.enum';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
+  private loggedInKey = 'isLoggedIn';
+  private userNameKey = 'userName';
+  private userIdKey = 'userId';
+  private userRolName = 'rolId';
 
-  private BaseUrl: string = 'http://localhost:5184/api/users';
+  private userNameSubject = new BehaviorSubject<string>(''); // BehaviorSubject to store the user name
+  private userRoleSubject = new BehaviorSubject<string>(''); // BehaviorSubject to store the user name
+  userName$ = this.userNameSubject.asObservable(); // expose the observable for other components to subscribe to
+  userRole$ = this.userRoleSubject.asObservable(); // expose the observable for other components to subscribe to
 
-  public loggedIn: boolean = false; 
-  public userLogged: string = ''; 
+  constructor(private http: HttpClient) {
+    if (typeof window !== 'undefined') {
+      const storedUserName = localStorage.getItem(this.userNameKey);
+      if (storedUserName) {
+        this.userNameSubject.next(storedUserName);
+      }
 
-  constructor(private http: HttpClient) { }
-
-  login(usr: string, pwd: string) {
-    const url = `${this.BaseUrl}/login`;
-    const params = new HttpParams().set('userName', usr).set('password', pwd);
-    return this.http.post(url, null, { params });
+      const storedRoleName = localStorage.getItem(this.userRolName);
+      if (storedRoleName) {
+        this.userRoleSubject.next(storedRoleName);
+      }
+    }
   }
 
-  getUserLogged(): string {
-    return this.userLogged;
-  }
+  login(username: string, password: string): Observable<any> {
+    const url = `${GLOBAL.apiBaseUrl}/${EndpointType.User}/login`;
 
-  isAuthenticated(): boolean {
-    return this.loggedIn;
+    const body = {
+      usr: username,
+      psw: password,
+    };
+    return this.http.post(url, body).pipe(
+      tap((res: any) => {
+        localStorage.setItem(this.loggedInKey, 'true');
+        localStorage.setItem(this.userNameKey, username);
+        localStorage.setItem(this.userIdKey, res.data.id.toString());
+        localStorage.setItem(this.userRolName, res.data.description);
+        this.userNameSubject.next(username);
+        this.userRoleSubject.next(res.data.description);
+      })
+    );
   }
 
   logout() {
-    this.loggedIn = false;
+    // Only interact with localStorage if in the browser
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem(this.loggedInKey);
+      localStorage.removeItem(this.userNameKey);
+      this.userNameSubject.next('');
+    }
+  }
+
+  getRolId(): string | null {
+    const storedRol = localStorage.getItem(this.userRolName);
+    return storedRol;
+  }
+
+  getUserId(): number | null {
+    const storedId = localStorage.getItem(this.userIdKey);
+    return storedId ? +storedId : null;
+  }
+
+  getUserName(): string | null {
+    if (typeof window !== 'undefined') {
+      const storedName = localStorage.getItem(this.userNameKey);
+      return storedName ? storedName : null;
+    }
+    return null;
+  }
+
+  isLoggedIn(): boolean {
+    // Only interact with localStorage if in the browser
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem(this.loggedInKey) === 'true';
+    }
+    return false;
   }
 }

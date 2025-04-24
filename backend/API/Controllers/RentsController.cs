@@ -1,16 +1,14 @@
-﻿using AutoMapper;
+﻿using API.DTOs;
+using API.Services;
+using AutoMapper;
 using Core.Constants;
-using Core.DTOs;
 using Core.Entities;
-using Core.Interfases;
-using Core.Services;
+using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
-using System;
 
 namespace API.Controllers;
-[ApiController]
-[Route("api/[controller]")]
+
 public class RentsController : BaseApiController
 {
     private readonly IUnitOfWork _unitOfWork;
@@ -101,7 +99,7 @@ public class RentsController : BaseApiController
         }
     }
 
-    [HttpPut("{id}")]
+    [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

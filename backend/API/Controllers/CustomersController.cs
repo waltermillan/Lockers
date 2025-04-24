@@ -1,15 +1,13 @@
-﻿using AutoMapper;
+﻿using API.Services;
+using AutoMapper;
 using Core.Constants;
 using Core.Entities;
-using Core.Interfases;
-using Core.Services;
+using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
-using System;
 
 namespace API.Controllers;
-[ApiController]
-[Route("api/[controller]")]
+
 public class CustomersController : BaseApiController
 {
     private readonly IUnitOfWork _unitOfWork;
@@ -53,6 +51,7 @@ public class CustomersController : BaseApiController
     public async Task<ActionResult<Customer>> Get(int id)
     {
         var customer = await _unitOfWork.Customers.GetByIdAsync(id);
+
         if (customer is null)
             return NotFound();
 
@@ -79,10 +78,10 @@ public class CustomersController : BaseApiController
             var customer = _mapper.Map<Customer>(oCustomer);
             _unitOfWork.Customers.Add(customer);
             await _unitOfWork.SaveAsync();
+
             if (customer is null)
-            {
                 return BadRequest();
-            }
+
             oCustomer.Id = customer.Id;
 
             object[] obj = { customer.Id, customer.Name, customer.Phone, customer.Address };
@@ -99,7 +98,7 @@ public class CustomersController : BaseApiController
         }
     }
 
-    [HttpPut("{id}")]
+    [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -138,6 +137,7 @@ public class CustomersController : BaseApiController
         try
         {
             var customer = await _unitOfWork.Customers.GetByIdAsync(id);
+
             if (customer is null)
                 return NotFound();
 

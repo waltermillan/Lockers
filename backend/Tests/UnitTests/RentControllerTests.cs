@@ -1,9 +1,9 @@
 ﻿using API.Controllers;
+using API.Services;
 using AutoMapper;
 using Core.Entities;
-using Core.Interfases;
+using Core.Interfaces;
 using Core.Services;
-using Core.Services.Tests;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Newtonsoft.Json;

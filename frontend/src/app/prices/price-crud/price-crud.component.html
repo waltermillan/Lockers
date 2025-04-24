@@ -1,0 +1,92 @@
+<form (ngSubmit)="onSubmit()" #PriceForm="ngForm">
+  <div
+    style="
+      max-height: 550px;
+      max-width: 1300px;
+      overflow-y: auto;
+      position: relative;
+    "
+  >
+    <!-- Tabla principal -->
+    <table
+      class="table table-bordered table-striped"
+      style="table-layout: fixed; width: 100%"
+    >
+      <thead class="sticky-header">
+        <tr>
+          <!-- <th>ID</th> -->
+          <th>Value</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of prices">
+          <!-- <td>{{ p.id }}</td> -->
+          <td>{{ p.value }}</td>
+          <td>
+            <table>
+              <tr>
+                <td style="text-align: center">
+                  <img
+                    src="assets/images/trash-alt.svg"
+                    style="height: 30px; width: 30px; cursor: pointer"
+                    (click)="deletePrice(p.id)"
+                    class="cursor-img"
+                    title="delete a price"
+                  />
+                </td>
+                <td style="text-align: center">
+                  <img
+                    src="assets/images/update.svg"
+                    style="height: 30px; width: 30px; cursor: pointer"
+                    (click)="updatePrice(p)"
+                    class="cursor-img"
+                    title="update a price"
+                  />
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Footer fijo dentro del scroll -->
+    <div class="table-footer-form">
+      <table style="table-layout: fixed; width: 100%">
+        <tr>
+          <!-- <td style="width: 33%">&nbsp;</td> -->
+          <td style="width: 33%">
+            <input
+              name="locationPostalCode"
+              type="number"
+              min="1"
+              [(ngModel)]="newPrice.value"
+              required
+              style="width: 10%"
+            />
+          </td>
+          <td style="width: 33%; text-align: center">
+            <input
+              type="submit"
+              class="btn btn-primary"
+              value="Add"
+              [disabled]="!PriceForm.valid"
+              style="width: 50%"
+            />
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</form>
+
+<!-- Popup para actualizar -->
+<div *ngIf="isPopupOpen" class="popup-overlay">
+  <div class="popup-content">
+    <app-price-update
+      [price]="selectedPrice"
+      (close)="closePopup()"
+    ></app-price-update>
+  </div>
+</div>

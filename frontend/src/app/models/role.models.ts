@@ -1,4 +1,9 @@
 export class Role {
-    id:number = 0;
-    description:string = '';
+  id: number;
+  description: string;
+
+  constructor() {
+    this.id = 0;
+    this.description = '';
+  }
 }

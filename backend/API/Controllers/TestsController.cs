@@ -1,33 +1,33 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Data;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace API.Controllers
+namespace API.Controllers;
+
+public class TestsController : BaseApiController
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class TestsController : ControllerBase
+    private readonly Context _context;
+
+    public TestsController(Context context)
     {
-        private readonly Context _context;
+        _context = context;
+    }
 
-        public TestsController(Context context)
+    [HttpGet("test-db-connection")]
+    public async Task<IActionResult> TestDbConnection()
+    {
+        try
         {
-            _context = context;
+            // Try open database conection
+            await _context.Database.OpenConnectionAsync();
+            var data = new { Code = 0, Message= "Successful connection to the database."};
+            return Ok(data);
         }
-
-        [HttpGet("test-db-connection")]
-        public async Task<IActionResult> TestDbConnection()
+        catch (Exception ex)
         {
-            try
-            {
-                // Try open database conection
-                await _context.Database.OpenConnectionAsync();
-                return Ok("Successful connection to the database.");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error connecting to database\r\n: {ex.Message}");
-            }
+            var data = new { Code = ex.InnerException.Data["Server Error Code"], Message = "Error connecting to the database", Error = ex.Message };
+            return StatusCode(500, data);
         }
     }
 }

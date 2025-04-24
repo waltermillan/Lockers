@@ -1,6 +1,5 @@
 ﻿using Core.Entities;
-using Core.Interfases;
-using Corer.Helpers;
+using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,18 +7,11 @@ namespace Infrastructure.Repositories;
 
 public class UserRepository(Context context) : GenericRepository<User>(context), IUserRepository
 {
-    public async Task<User> AuthenticateAsync(string userName, string password)
+    public async Task<User> GetByUserAsync(string userName)
     {
-        var user = await _context.Users
-                                 .FirstOrDefaultAsync(u => u.UserName.ToLower() == userName.ToLower());
-
-        if (user is null)
-            return null;
-
-        if (PasswordHasher.VerifyPassword(password, user.Password)) 
-            return user;
-
-        return null; // ==> If the passwords do not match, we return null
+        // Search administrator by user
+        return await _context.Users
+                             .FirstOrDefaultAsync(a => a.UserName == userName);
     }
 
     public async Task<User> GetByAdministratorIdAsync(int administratorId)

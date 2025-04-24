@@ -1,15 +1,14 @@
 ﻿using AutoMapper;
 using Core.Constants;
 using Core.Entities;
-using Core.Interfases;
+using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using System;
 using System.Reflection.Metadata;
 
 namespace API.Controllers;
-[ApiController]
-[Route("api/[controller]")]
+
 public class LocationsController : BaseApiController
 {
     private readonly IUnitOfWork _unitOfWork;

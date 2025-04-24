@@ -5,12 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Entities
+namespace Core.Entities;
+
+[Table("Roles")]
+public class Role : BaseEntity
 {
-    [Table("Roles")]
-    public class Role : BaseEntity
-    {
-        [Column("description")]
-        public string Description { get; set; }
-    }
+    [Column("description")]
+    public string Description { get; set; }
 }

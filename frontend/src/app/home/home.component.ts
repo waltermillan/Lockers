@@ -1,19 +1,16 @@
 // home.component.ts
 import { Component } from '@angular/core';
-import { GLOBAL_CONFIG } from '../config/config.global';
-
+import { GLOBAL } from '@configuration/configuration.global';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
+  title: string = '';
 
-  title:string = '';
-
-  constructor() { 
-    this.title = GLOBAL_CONFIG.appName;
+  constructor() {
+    this.title = GLOBAL.appName;
   }
-
 }

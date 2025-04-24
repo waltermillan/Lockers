@@ -1,0 +1,56 @@
+<!-- Tabla de Clientes -->
+<div class="row mb-4">
+  <div style="max-height: 500px; max-width: 1300px; overflow-y: auto">
+    <table id="tblLockersRented" class="table table-bordered table-striped">
+      <thead class="sticky-header">
+        <tr>
+          <!-- <th>ID</th> -->
+          <th>Customer</th>
+          <th>Locker</th>
+          <th>Rental Date</th>
+          <th>Return Date</th>
+          <th>User</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="rents.length > 0">
+        <tr *ngFor="let rent of rents">
+          <!-- <td>{{ rent.id }}</td> -->
+          <td>{{ rent.customer }}</td>
+          <td>{{ rent.locker }}</td>
+          <td>{{ rent.rentalDate | date : "dd/MM/yyyy" }}</td>
+          <td>{{ rent.returnDate | date : "dd/MM/yyyy" }}</td>
+          <td>{{ rent.userName }}</td>
+          <td>
+            <img
+              src="assets/images/trash-alt.svg"
+              style="
+                height: 30px;
+                width: 30px;
+                max-height: 30px;
+                max-width: 30pc;
+              "
+              class="img img-info"
+              (click)="deleteRent(rent.id, rent.idLocker)"
+            />
+          </td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="rents.length == 0">
+        <td colspan="6" style="text-align: center">No Data</td>
+        <td></td>
+      </tbody>
+    </table>
+  </div>
+</div>     
+
+<!-- Show Total --> 
+<div *ngIf="rents.length > 0">
+  <b>Total Rented: </b> 
+  <span style="color: darkgreen;">€ {{ this.total }}</span>
+  <img 
+    src="assets/images/pdf.svg" 
+    (click)="export()" 
+    style="max-width: 230px; max-height: 30px; margin-left: 12px; cursor: pointer;" title="Export to PDF">
+</div>
+
