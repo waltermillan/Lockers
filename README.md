@@ -11,6 +11,7 @@ Connect to MySQL, through EF.
 BACKEND:
 - Onion Architecture.
 - Design Patterns: Repository/UnitOfWork/DTO.
+- Add Unit tests (2025-03-23)
 
 FRONTEND:
 - Developed with Angular 18.0.2.
@@ -25,4 +26,4 @@ DB
 1. Clone the repository:
 
 git clone https://github.com/waltermillan/Lokers.git
-YouTube: https://youtu.be/y3lp6_5Npe0
+YouTube: [https://youtu.be/y3lp6_5Npe0](https://youtu.be/TRg9NGVsGkQ)
